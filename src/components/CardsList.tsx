@@ -30,21 +30,19 @@ const CardsList = () => {
 
   const [listHeight, setListHeight] = useState(0);
 
+  const maxScrollY = listHeight - screenHeight + 100;
+
   const pan = Gesture.Pan()
     .onBegin(() => {})
     .onStart(() => {
       console.log('Panning started');
     })
     .onChange(event => {
-      scrollY.value = clamp(
-        scrollY.value - event.changeY,
-        0,
-        listHeight - screenHeight + 100,
-      );
+      scrollY.value = clamp(scrollY.value - event.changeY, 0, maxScrollY);
     })
     .onEnd(event => {
       scrollY.value = withClamp(
-        {min: 0, max: listHeight - screenHeight + 100},
+        {min: 0, max: maxScrollY},
         withDecay({velocity: -event.velocityY}),
       );
     });
