@@ -6,7 +6,6 @@ const Card = ({card, index, scrollY}) => {
   const translateY = useDerivedValue(() => -scrollY.value);
   return (
     <Animated.Image
-      key={index}
       source={card}
       style={{
         width: '100%',

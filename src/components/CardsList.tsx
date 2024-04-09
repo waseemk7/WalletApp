@@ -1,8 +1,14 @@
 /* eslint-disable react-native/no-inline-styles */
-import React from 'react';
-import {StyleSheet, View} from 'react-native';
+import React, {useState} from 'react';
+import {StyleSheet, View, useWindowDimensions} from 'react-native';
 import {Gesture, GestureDetector} from 'react-native-gesture-handler';
-import Animated, {useSharedValue} from 'react-native-reanimated';
+import {
+  cancelAnimation,
+  useSharedValue,
+  withDecay,
+  clamp,
+  withClamp,
+} from 'react-native-reanimated';
 import Card from './Card';
 
 const cards = [
@@ -20,23 +26,36 @@ const cards = [
 const CardsList = () => {
   const scrollY = useSharedValue(0);
 
+  const {height: screenHeight} = useWindowDimensions();
+
+  const [listHeight, setListHeight] = useState(0);
+
   const pan = Gesture.Pan()
+    .onBegin(() => {})
     .onStart(() => {
       console.log('Panning started');
     })
     .onChange(event => {
-      scrollY.value = scrollY.value - event.changeY;
-      console.log('ScrollY value', scrollY.value);
+      scrollY.value = clamp(
+        scrollY.value - event.changeY,
+        0,
+        listHeight - screenHeight + 100,
+      );
     })
-    .onEnd(() => {
-      console.log('Panning ended');
+    .onEnd(event => {
+      scrollY.value = withClamp(
+        {min: 0, max: listHeight - screenHeight + 100},
+        withDecay({velocity: -event.velocityY}),
+      );
     });
 
   return (
     <GestureDetector gesture={pan}>
-      <View style={styles.padding10}>
+      <View
+        style={styles.padding10}
+        onLayout={event => setListHeight(event.nativeEvent.layout.height)}>
         {cards.map((card, index) => (
-          <Card card={card} index={index} scrollY={scrollY} />
+          <Card key={index} card={card} index={index} scrollY={scrollY} />
         ))}
       </View>
     </GestureDetector>
@@ -48,11 +67,5 @@ export default CardsList;
 const styles = StyleSheet.create({
   padding10: {
     padding: 10,
-  },
-  image: {
-    width: '100%',
-    height: undefined,
-    aspectRatio: 7 / 4,
-    marginVertical: 5,
   },
 });
