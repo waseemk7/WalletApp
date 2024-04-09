@@ -31,10 +31,13 @@ const Card = ({card, index, scrollY, activeCardIndex}) => {
         return;
       }
       if (activeCardIndex.value === null) {
+        // No card selected move to list view
         translateY.value = withTiming(clamp(-current, -index * cardHeight, 0));
       } else if (activeCardIndex.value === index) {
+        //This card becomes active
         translateY.value = withTiming(-index * cardHeight);
       } else {
+        //Another card is active move to bottom
         translateY.value = withTiming(
           -index * cardHeight * 0.9 + screenHeight * 0.7,
         );
