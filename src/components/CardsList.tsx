@@ -25,11 +25,10 @@ export default CardsList;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
   },
   image: {
-    width: 350, // Adjust as per your requirement
-    height: 200, // Adjust as per your requirement
+    width: '100%',
+    height: undefined,
+    aspectRatio: 7 / 4,
   },
 });
