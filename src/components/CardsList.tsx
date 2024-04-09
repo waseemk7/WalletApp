@@ -1,6 +1,9 @@
+/* eslint-disable react-native/no-inline-styles */
 import React from 'react';
-import {Image, StyleSheet, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import {Gesture, GestureDetector} from 'react-native-gesture-handler';
+import Animated, {useSharedValue} from 'react-native-reanimated';
+import Card from './Card';
 
 const cards = [
   require('../../assets/cards/Card_1.jpg'),
@@ -15,12 +18,15 @@ const cards = [
 ];
 
 const CardsList = () => {
+  const scrollY = useSharedValue(0);
+
   const pan = Gesture.Pan()
     .onStart(() => {
       console.log('Panning started');
     })
-    .onChange(() => {
-      console.log('Panning');
+    .onChange(event => {
+      scrollY.value = scrollY.value - event.changeY;
+      console.log('ScrollY value', scrollY.value);
     })
     .onEnd(() => {
       console.log('Panning ended');
@@ -30,7 +36,7 @@ const CardsList = () => {
     <GestureDetector gesture={pan}>
       <View style={styles.padding10}>
         {cards.map((card, index) => (
-          <Image key={index} source={card} style={styles.image} />
+          <Card card={card} index={index} scrollY={scrollY} />
         ))}
       </View>
     </GestureDetector>
