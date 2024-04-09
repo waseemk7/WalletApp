@@ -1,9 +1,9 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {useState} from 'react';
 import Animated, {
+  Easing,
   clamp,
   useAnimatedReaction,
-  useDerivedValue,
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
@@ -35,11 +35,18 @@ const Card = ({card, index, scrollY, activeCardIndex}) => {
         translateY.value = withTiming(clamp(-current, -index * cardHeight, 0));
       } else if (activeCardIndex.value === index) {
         //This card becomes active
-        translateY.value = withTiming(-index * cardHeight);
+        translateY.value = withTiming(-index * cardHeight, {
+          easing: Easing.out(Easing.quad),
+          duration: 500,
+        });
       } else {
         //Another card is active move to bottom
         translateY.value = withTiming(
           -index * cardHeight * 0.9 + screenHeight * 0.7,
+          {
+            easing: Easing.out(Easing.quad),
+            duration: 500,
+          },
         );
       }
     },
