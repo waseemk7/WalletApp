@@ -3,7 +3,6 @@ import React, {useState} from 'react';
 import {StyleSheet, View, useWindowDimensions} from 'react-native';
 import {Gesture, GestureDetector} from 'react-native-gesture-handler';
 import {
-  cancelAnimation,
   useSharedValue,
   withDecay,
   clamp,
