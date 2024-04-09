@@ -1,10 +1,11 @@
 import React from 'react';
-import {SafeAreaView, StyleSheet, Text} from 'react-native';
+import {SafeAreaView, StyleSheet} from 'react-native';
+import CardsList from './src/components/CardsList';
 
 function App(): React.JSX.Element {
   return (
     <SafeAreaView style={styles.container}>
-      <Text>App.tsx</Text>
+      <CardsList />
     </SafeAreaView>
   );
 }
