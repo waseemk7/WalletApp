@@ -14,7 +14,7 @@ const CardsList = () => {
     require('../../assets/cards/Card_9.jpg'),
   ];
   return (
-    <View>
+    <View style={styles.padding10}>
       {cards.map((card, index) => (
         <Image key={index} source={card} style={styles.image} />
       ))}
@@ -25,6 +25,9 @@ const CardsList = () => {
 export default CardsList;
 
 const styles = StyleSheet.create({
+  padding10: {
+    padding: 10,
+  },
   image: {
     width: '100%',
     height: undefined,
