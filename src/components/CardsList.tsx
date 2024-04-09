@@ -32,6 +32,8 @@ const CardsList = () => {
 
   const maxScrollY = listHeight - screenHeight + 100;
 
+  const activeCardIndex = useSharedValue(null);
+
   const pan = Gesture.Pan()
     .onBegin(() => {})
     .onStart(() => {
@@ -53,7 +55,13 @@ const CardsList = () => {
         style={styles.padding10}
         onLayout={event => setListHeight(event.nativeEvent.layout.height)}>
         {cards.map((card, index) => (
-          <Card key={index} card={card} index={index} scrollY={scrollY} />
+          <Card
+            key={index}
+            card={card}
+            index={index}
+            scrollY={scrollY}
+            activeCardIndex={activeCardIndex}
+          />
         ))}
       </View>
     </GestureDetector>
