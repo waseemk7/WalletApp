@@ -14,8 +14,10 @@ const CardsList = () => {
     require('../../assets/cards/Card_9.jpg'),
   ];
   return (
-    <View style={styles.container}>
-      <Image source={cards[0]} style={styles.image} />
+    <View>
+      {cards.map((card, index) => (
+        <Image key={index} source={card} style={styles.image} />
+      ))}
     </View>
   );
 };
@@ -23,12 +25,10 @@ const CardsList = () => {
 export default CardsList;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
   image: {
     width: '100%',
     height: undefined,
     aspectRatio: 7 / 4,
+    marginVertical: 5,
   },
 });
